@@ -1,0 +1,206 @@
+package org.pages;
+
+//import java.util.concurrent.TimeUnit;
+
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+//import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+//import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Base {
+	 WebDriver wait;
+	  WebDriver driver;
+      WebElement findElement;
+
+	public WebDriver initializedriver() {
+
+		WebDriverManager.chromedriver().setup();
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+//driver.manage().timeouts().im
+		return driver;
+		
+
+	}
+	public  void launchurl() {
+
+		
+		launchurl("https://portal.vitelity.tech/login.php");
+
+			}
+
+	public void launchurl(String url) {
+		driver.get(url);
+
+	}
+	public  WebElement xpath(String xpathvalue) {
+		WebElement findElement = driver.findElement(By.xpath(xpathvalue));
+		return findElement;
+}
+
+	public  void textsend(String text, WebElement refname) {
+		refname.sendKeys(text);
+
+	}
+	public void buttonclick(WebElement refname) {
+		refname.click();
+
+	}
+	public  void clickOn(String phonenumbers, int timeout) {
+	WebDriverWait w = new WebDriverWait(driver, timeout);
+		WebElement x = w.until(ExpectedConditions.elementToBeClickable(findElement));
+		x.click();
+
+
+	}
+
+	
+}
+package stepdefinition;
+
+
+//import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+
+//import org.openqa.selenium.By;
+
+//import org.testng.Assert.assertTrue;
+
+import org.openqa.selenium.WebElement;
+import org.pages.Base;
+import org.testng.Assert;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+
+public class StepDefinition extends Base {
+	Base base = new Base();
+	
+   
+
+@Given("User navigates into vitelity webpage")
+public void user_navigates_into_vitelity_webpage() {
+	
+    base.initializedriver();
+    base.launchurl();
+   
+	
+}
+
+@When("User gives login credentials {string} and {string}")
+public void user_gives_login_credentials_and(String string1, String string2)  {
+	String username = "//input[@name='username']";
+	WebElement w = base.xpath(username);
+	base.textsend(string1,w);
+	
+	String password = "//input[@name='pass']";
+	WebElement p = base.xpath(password);
+	base.textsend( string2,p);
+	String phonenumbers = "/html/body/div/form/button";
+	base.clickOn(phonenumbers, 5);
+	assertTrue(true, phonenumbers);
+}
+
+
+@And("I check phone numbers list")
+public void i_check_phone_numbers_list()  {
+	
+		String phonenumbers = "//*[text()='Phone Numbers']";
+		base.clickOn(phonenumbers, 5);
+		assertTrue(true, phonenumbers);
+	}
+
+
+@When("I go to click singlelocal menu")
+public void i_go_to_click_singlelocal_menu() {
+	String phonenumbers = "//*[text()='Single Local']";
+	base.clickOn(phonenumbers, 5);
+	assertTrue(true,phonenumbers);
+}
+
+@And("I go to click multiplelocal menu")
+public void i_go_to_click_multiplelocal_menu()  {
+		String multiplemenu = "//*[text()='Multiple Local']";
+		base.clickOn( multiplemenu, 5);
+		Assert.assertTrue(true);
+}
+
+
+
+@And("I go to click singletollfree menu")
+public void i_go_to_click_singletollfree_menu()  {
+	String singletollfree = "//*[text()='Single Toll Free']";
+	base.clickOn(singletollfree, 10);
+	assertTrue(true, singletollfree);
+	
+}
+
+@And("I go to click multipletollfree menu")
+public void i_go_to_click_multipletollfree_menu() {
+	String multipletollfree = "	//*[text()='Multiple Toll Free']";
+		base.clickOn(multipletollfree, 5);
+	assertTrue(true, multipletollfree);
+
+}
+
+@And("I go to click singlecustomtollfree menu")
+public void i_go_to_click_singlecustomtollfree_menu()  {
+	String singlecustomtollfree = "	//*[text()='Single Custom Toll Free']";
+	base.clickOn(singlecustomtollfree, 5);
+	assertTrue(true, singlecustomtollfree);
+}
+
+@And("I go to click multiplecustomtollfree menu")
+public void i_go_to_click_multiplecustomtollfree_menu() {
+	String multiplecustomtollfree = "	//*[text()='Multiple Custom Toll Free']";
+	base.clickOn(multiplecustomtollfree, 5);
+	assertTrue(true, multiplecustomtollfree);
+	
+}
+
+@Then("I go to click international menu")
+public void i_go_to_click_international_menu()  {
+	String international = "//*[text()='International']";
+	base.clickOn(international, 5);
+	assertTrue(true, international);
+	
+}
+
+@Then("I go to click vFax menu")
+public void i_go_to_click_v_fax_menu()  {
+	String vFax = "//*[text()='vFax']";
+	base.clickOn(vFax, 5);
+	assertTrue(true, vFax);
+	
+}
+
+@Then("I go to click portrequests menu")
+public void i_go_to_click_portrequests_menu()  {
+	String portrequests = "//*[text()='Port Requests']";
+	base.clickOn(portrequests, 5);
+	assertTrue(true, portrequests);
+	
+}
+
+
+}
+
+
+
+	
+	
+
+
+

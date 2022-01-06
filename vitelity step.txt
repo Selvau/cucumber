@@ -1,0 +1,43 @@
+package StepComponent;
+
+import org.openqa.selenium.WebElement;
+import org.testng.Assert;
+
+import TestJava.UIUtility;
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class LoginPageStepDef extends UIUtility {
+
+	@Given("User navigates into vitelity webpage")
+	public void user_navigates_into_vitelity_webpage() {
+
+		launchbrowser("chrome");
+		Assert.assertEquals(true, launchurl("https://portal.vitelity.tech/login.php"));
+
+	}
+
+	@When("User gives login credentials {string} and {string}")
+	public void user_gives_login_credentials_and(String username, String password) {
+		WebElement textuser = convertwebelement("//input[@name='username']");
+		Assert.assertEquals(true,typetext(textuser,username));
+		WebElement textpass = convertwebelement("//input[@name='pass']");
+		Assert.assertEquals(true,typetext(textpass,password));
+		WebElement login = convertwebelement("//button[@name='submit']");
+		Assert.assertEquals(true,clickelement(login));
+
+	}
+
+    @And("User click phone numbers menu")
+    public void user_click_phone_numbers_menu()  {
+    	WebElement phone = convertwebelement("//a[text()='Phone Numbers']");
+    	Assert.assertEquals(true,clickelement(phone));
+    }
+    @Then("User navigates into sub menu")
+    public void user_navigates_into_sub_menu()  {
+    	
+    }
+    
+}

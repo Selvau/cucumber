@@ -1,0 +1,93 @@
+package TestJava;
+
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class UIUtility {
+
+	static WebDriver wait;
+	static WebDriver driver;
+	static WebElement findElement;
+
+	public static void launchbrowser(String browsername) {
+
+		if (browsername.equalsIgnoreCase("chrome")) {
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();
+		} else if (browsername.equalsIgnoreCase("edge")) {
+			WebDriverManager.edgedriver().setup();
+			driver = new EdgeDriver();
+		}
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+
+	}
+
+	public static boolean launchurl(String url) {
+		boolean flag = false;
+		try {
+			driver.get(url);
+			flag = true;
+		} catch (Exception e) {
+			System.out.println("Error in Launchurl : " + e.getMessage());
+		}
+		return flag;
+
+	}
+
+	public static WebElement convertwebelement(String xpathvalue) {
+		WebElement findElement = driver.findElement(By.xpath(xpathvalue));
+		return findElement;
+	}
+
+	public static boolean typetext(WebElement element, String value) {
+		boolean flag = false;
+		try {
+			element.sendKeys(value);
+			System.out.println("Text typed Successfully");
+			flag = true;
+		} catch (Exception g) {
+			System.out.println("Error in typetext : " + g.getMessage());
+		}
+		return flag;
+
+	}
+
+	public static boolean clickelement(WebElement element) {
+		boolean flag = false;
+		try {
+			if (elementwait(element, 10)) {
+				element.click();
+				System.out.println("Click the element Successfully");
+				flag = true;
+			}
+		} catch (Exception e) {
+			System.out.println("Error in clickelement : " + e.getMessage());
+		}
+		return flag;
+
+	}
+
+	public static boolean elementwait(WebElement element, int timeout) {
+		boolean flag = false;
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, timeout);
+			wait.until(ExpectedConditions.elementToBeClickable(element));
+			flag = true;
+		} catch (Exception e) {
+			System.out.println("Error in elementwait : " + e.getMessage());
+		}
+		return flag;
+
+	}
+
+}
