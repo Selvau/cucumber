@@ -1,0 +1,28 @@
+
+
+Feature: Verify login functionality
+  
+ 
+  Scenario: Login functionality with valid credentials 
+    Given User navigates into vitelity webpage 
+    When User gives login credentials "vitelqa" and "Chennai123"
+    And  I check phone numbers list 
+    Then I go to click singlelocal menu
+    And I go to click multiplelocal menu 
+    And I go to click singletollfree menu
+    And I go to click multipletollfree menu
+    And I go to click singlecustomtollfree menu
+    And I go to click multiplecustomtollfree menu
+    Then I go to click international menu
+    Then I go to click vFax menu
+    Then I go to click portrequests menu
+    
+    
+    
+    
+    
+    
+     
+   
+
+  
